@@ -1,0 +1,265 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap');
+
+
+*{
+    font-size:16px;
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    font-family: zalando sans semi expanded, sans-serif;
+}
+:root{
+    user-select: none;
+    --house-width: 20vw;     /* base width relative to viewport */
+    --roof-height-ratio: 0.45; /* roof height = ratio * width (0.45 = 45%) */
+    --body-aspect: 0.8;    /* body aspect ratio width/height */
+}
+body{
+    background-image: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+    height:100%;
+}
+.cEl{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    grid-area:"cu";
+}
+.triangle{
+    width:100%;
+    padding-bottom: calc(var(--roof-height-ratio) * 100%);
+    -webkit-clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    transform: scaleY(-1);
+  }
+  .curtain{
+    width:100%;
+    /*aspect-ratio: var(--body-aspect);*/
+    height:50vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  }
+
+.contain{
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    gap:0 5rem 5rem 0;
+    width:100%;
+}
+
+.firstPage{
+    height:100vh;
+}
+.logoDBPC{
+    width:25vw;
+    height:auto;
+     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.6));
+}
+.logoDummy .logoDBPC{
+    display:none;
+}
+.logoDummy{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.logoMain{
+    padding-left:6vw;
+    padding-right:6vw;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height:100vh;
+    grid-area: "lo";
+}
+
+.nameTxt{
+    font-size:3vw;
+    color:white;
+    text-align:center;
+    margin-top:1vw;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+.scoreTxt{
+    font-size:5vw;
+    color:white;
+    text-align:center;
+    margin-top:1vw;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+.box{
+    width:50%;
+    height:auto;
+    padding:1rem;
+    background-color:rgba(255, 255, 255, 0.425);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:5vw;
+    border-radius:10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color:black;
+}
+.box h1{
+    background: -webkit-linear-gradient(#000000, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size:8vw;
+}
+.scoreTxt sup{
+    font-size:2.5vw;
+}
+#bosco{
+    background-color:blue;
+    background-image: url('blueTexture.jpg');
+    background-position: center bottom;
+    background-repeat: repeat;
+    background-size: auto;
+}
+#savio{
+    background-color:red;
+    background-image: url('redTexture.jpg');
+    background-repeat: repeat;
+    background-position: center bottom;
+    background-size: auto;
+}
+#rua{
+    background-color:green;
+    background-image: url('greenTexture.jpeg');
+    background-repeat: repeat;
+    background-position: center bottom;
+    background-size: auto;
+}
+#francis{
+    background-color:yellow;
+    background-image: url('yellowTexture.avif');
+    background-repeat: repeat;
+    background-position: center bottom;
+    background-size: auto;
+}
+.break {
+  width: 100%;
+  height: 0; /* Or adjust as needed for visual spacing */
+}
+
+@media screen and (max-width: 425px) {
+    
+.logoMain{
+    display: none;
+}
+.logoDummy .logoDBPC{
+    display:initial;
+
+}
+.curtain{
+    height:30vh;
+}
+body{
+    background-image: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+}
+
+
+table {
+  width: 85%;
+  margin:4rem auto;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+caption {
+  caption-side: top;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+  text-align:center;
+  padding:0.75rem;
+  border:5px solid rgba(201, 217, 255, 0.285);
+  border-radius: 10px; 
+}
+
+th {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #ffffff;
+  text-transform: uppercase;
+  padding: 15px;
+  letter-spacing: 1px;
+}
+
+td {
+  padding: 14px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease;
+  color:rgb(34, 42, 45);
+  font-weight: bold;
+  font-size:1rem;
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(132, 0, 255, 0.1);
+}
+
+tr:nth-child(even) {
+  background-color: rgba(0, 38, 255, 0.1);
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.01);
+  transition: all 0.1s ease;
+}
+
+@media screen and (max-width: 600px) {
+  th, td {
+    padding: 10px;
+  }
+  caption{
+    font-size:1.5rem;
+  }
+  th{
+    font-size:0.8rem;
+  }
+  td{
+    font-size:0.8rem;
+  }
+} 
+
+@media screen and (max-width: 400px) {
+  th, td {
+    padding: 5px;
+  }
+  caption{
+    font-size:1.5rem;
+  }
+  th{
+    font-size:0.8rem;
+  }
+  td{
+    font-size:0.8rem;
+  }
+  th:nth-child(5), td:nth-child(5) {
+      width:0;
+      display:none;
+    }
+} 
