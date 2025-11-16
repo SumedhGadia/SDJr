@@ -34,7 +34,7 @@ body{
     padding-bottom: calc(var(--roof-height-ratio) * 100%);
     -webkit-clip-path: polygon(0 100%, 50% 0, 100% 100%);
     clip-path: polygon(0 100%, 50% 0, 100% 100%);
-    transform: scaleY(-1);
+    transform: scaleY(-1) translateY(1px);
   }
   .curtain{
     width:100%;
@@ -55,7 +55,7 @@ body{
 }
 
 .firstPage{
-    height:100vh;
+    min-height:100vh;
 }
 .logoDBPC{
     width:25vw;
@@ -64,11 +64,14 @@ body{
 }
 .logoDummy .logoDBPC{
     display:none;
+    width:30vh;
+    height:auto;
 }
 .logoDummy{
     display:flex;
     justify-content: center;
     align-items: center;
+    padding:0;
 }
 .logoMain{
     padding-left:6vw;
@@ -77,17 +80,28 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    height:100vh;
+    min-height:90vh;
     grid-area: "lo";
 }
 
 .nameTxt{
+    color: rgb(45, 45, 45);
     font-size:3vw;
-    color:white;
     text-align:center;
     margin-top:1vw;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    -webkit-text-stroke: 2px rgb(151, 151, 151); */
+    text-shadow:
+    -3px 0 #ffffff,
+     3px 0 #ffffff,
+     0 -3px #ffffff,
+     0  3px #ffffff,
+    -3px -3px #ffffff,
+     3px -3px #ffffff,
+    -3px  3px #ffffff,
+     3px  3px #ffffff;
 }
+
 .scoreTxt{
     font-size:5vw;
     color:white;
@@ -150,6 +164,19 @@ body{
   height: 0; /* Or adjust as needed for visual spacing */
 }
 
+/* .sportsLogo{
+  margin-top: -10%;
+  margin-bottom: 4%;
+  width:15vw;
+  height:auto;
+  transform:translateY(12px);
+  z-index: 10;
+}
+.containSportsLogo{
+  display:flex;
+  justify-content: center;
+} */
+
 @media screen and (max-width: 425px) {
     
 .logoMain{
@@ -157,7 +184,9 @@ body{
 }
 .logoDummy .logoDBPC{
     display:initial;
-
+}
+.logoDummy{
+    padding:10vh 0;
 }
 .curtain{
     height:30vh;
@@ -169,6 +198,10 @@ body{
     background-position: center;
     background-attachment: fixed;
 }
+ .nameTxt{
+     font-size: 1.1rem;
+  }
+   
 }
 
 
@@ -197,6 +230,36 @@ caption {
   padding:0.75rem;
   border:5px solid rgba(201, 217, 255, 0.285);
   border-radius: 10px; 
+}
+
+
+.para {
+  max-width: 90%; 
+  padding:1rem;
+  margin-left:auto;
+  margin-right:auto;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(15px);   
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  border: 5px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.6s ease-in-out;
+
+}
+.paraText{
+  font-weight:600;
+  text-align:center;
+  color: #2d2e34;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.3px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 th {
@@ -243,6 +306,9 @@ tr:hover {
   td{
     font-size:0.8rem;
   }
+  .paraText{
+    font-size:1rem;
+  }
 } 
 
 @media screen and (max-width: 400px) {
@@ -262,4 +328,7 @@ tr:hover {
       width:0;
       display:none;
     }
-} 
+  .paraText{
+    font-size:0.8rem;
+  }
+}
