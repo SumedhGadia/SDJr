@@ -3,11 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Day</title>
+    <title>Sports Day 2025</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="sportsLogo.png" type="image/x-icon">
 </head>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAJ35AIHvm0LBKdsvp7FPJy7UNpng3QD2E",
+    authDomain: "sportsday-8ee20.firebaseapp.com",
+    databaseURL: "https://sportsday-8ee20-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "sportsday-8ee20",
+    storageBucket: "sportsday-8ee20.appspot.com",
+    messagingSenderId: "658029013662",
+    appId: "1:658029013662:web:92bbbf25d87917fbc8298f",
+    measurementId: "G-NDPG93JPZX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const housesRef = ref(db, "houses");
+
+  // REFERENCES TO THE 4 BIG BOXES
+  const curtainScores = {
+    savio: document.querySelector("#curt1 .box h1"),
+    bosco: document.querySelector("#curt2 .box h1"),
+    rua: document.querySelector("#curt3 .box h1"),
+    francis: document.querySelector("#curt4 .box h1"),
+  };
+
+  onValue(housesRef, (snapshot) => {
+    if (!snapshot.exists()) return;
+    const data = snapshot.val();
+
+    // SHOW RAW SCORES IN CURTAIN BOXES
+    curtainScores.savio.textContent = data.savio;
+    curtainScores.bosco.textContent = data.bosco;
+    curtainScores.rua.textContent = data.rua;
+    curtainScores.francis.textContent = data.francis;
+    });
+</script>
+
+
 <body>
-    
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="nav-logo">SPORTS DAY</div>
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#" class="nav-item">Home</a>
+    <a href="about.html" class="nav-item">About Us</a>
+  </div>
+
+  <div class="burger" id="burgerBtn">
+    ☰
+  </div>
+</nav>
+    <script>
+  const burgerBtn = document.getElementById("burgerBtn");
+  const navLinks = document.getElementById("navLinks");
+
+  burgerBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+  });
+</script>
+
     <div class="firstPage">
     <div class="contain">
         <div class="cEl" id="curt1">

@@ -1,7 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap');
-
-
+@import url('https://fonts.google.com/specimen/Anton');
+@import url('https://fonts.google.com/specimen/Bebas+Neue');
+@import url('https://fonts.google.com/specimen/Teko');
+@import url('https://fonts.google.com/specimen/Poppins');
+@import url('https://fonts.google.com/specimen/Montserrat');
+@import url('https://fonts.google.com/specimen/Inter');
+@import url('https://fonts.google.com/specimen/Oswald');
 *{
     font-size:16px;
     box-sizing: border-box;
@@ -39,7 +44,7 @@ body{
   .curtain{
     width:100%;
     /*aspect-ratio: var(--body-aspect);*/
-    height:50vh;
+    height:60vh;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -80,7 +85,7 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    min-height:90vh;
+    min-height:95vh;
     grid-area: "lo";
 }
 
@@ -110,6 +115,7 @@ body{
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .box{
+   font-family: 'Teko', sans-serif;
     width:50%;
     height:auto;
     padding:1rem;
@@ -121,14 +127,68 @@ body{
     border-radius:10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     color:black;
+    margin-top:3rem;
+}
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.nav-logo {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(255,255,255,0.4);
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-item {
+  color: white;
+  font-size: 1.1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.nav-item:hover {
+  color: #ffd700;
+}
+
+.burger {
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  display: none; /* hidden on desktop */
 }
 .box h1{
     background: -webkit-linear-gradient(#000000, #333);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size:8vw;
+    font-size:6vw;
 }
 .scoreTxt sup{
+  
     font-size:2.5vw;
 }
 #bosco{
@@ -176,33 +236,6 @@ body{
   display:flex;
   justify-content: center;
 } */
-
-@media screen and (max-width: 425px) {
-    
-.logoMain{
-    display: none;
-}
-.logoDummy .logoDBPC{
-    display:initial;
-}
-.logoDummy{
-    padding:10vh 0;
-}
-.curtain{
-    height:30vh;
-}
-body{
-    background-image: url('bg.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
- .nameTxt{
-     font-size: 1.1rem;
-  }
-   
-}
 
 
 table {
@@ -309,7 +342,7 @@ tr:hover {
   .paraText{
     font-size:1rem;
   }
-} 
+}
 
 @media screen and (max-width: 400px) {
   th, td {
@@ -330,5 +363,100 @@ tr:hover {
     }
   .paraText{
     font-size:0.8rem;
+  }
+  
+  .navbar{
+    padding: 3px 11px;   
+  }
+}
+@media screen and (max-width: 425px) {
+    
+.logoMain{
+    display: none;
+}
+.logoDummy .logoDBPC{
+    display:initial;
+}
+.logoDummy{
+    padding:10vh 0;
+}
+.curtain{
+    height:30vh;
+}
+body{
+    background-image: url('bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+ .nameTxt{
+  font-family: 'Bebas Neue', sans-serif;
+     font-size: 1.1rem;
+  }
+   
+}
+
+@media (max-width: 650px) {
+  .burger {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    width: 200px;
+    height: 100vh;
+    padding: 20px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: right 0.3s ease;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-item {
+    font-size: 1.3rem;
+  }
+}
+@media (max-width: 650px) {
+  .navbar {
+    padding: 6px 16px;   
+  }
+
+  .nav-logo {
+    font-size: 1.3rem;   
+  }
+
+  .burger {
+    font-size: 1.6rem;  
+  }
+}
+@media (max-width: 650px) {
+  .navbar {
+    justify-content: center;
+    padding: 6px 16px;
+  }
+
+  .nav-left {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-logo {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .burger {
+    position: absolute;
+    right: 20px; 
   }
 }
