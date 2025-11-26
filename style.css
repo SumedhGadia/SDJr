@@ -20,12 +20,18 @@
     --roof-height-ratio: 0.45; /* roof height = ratio * width (0.45 = 45%) */
     --body-aspect: 0.8;    /* body aspect ratio width/height */
 }
-body{
+html, body {
+  margin: 0;
+  padding: 0;
+}
+body {
     background-image: url('bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    width:100%;
-    height:100%;
+    background-position: center;
+    background-attachment: fixed;  
+    min-height: 100vh;            
+    width: 100%;
 }
 .cEl{
     width:100%;
@@ -61,11 +67,12 @@ body{
 
 .firstPage{
     min-height:100vh;
+      margin-bottom: 0;
+  padding-bottom: 0;
 }
-.logoDBPC{
-    width:25vw;
-    height:auto;
-     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.6));
+.logoDBPC {
+    width: 25vw;
+    height: 25vw;
 }
 .logoDummy .logoDBPC{
     display:none;
@@ -87,7 +94,7 @@ body{
     flex-direction: row;
     min-height:95vh;
     grid-area: "lo";
-}
+    }
 
 .nameTxt{
     color: rgb(45, 45, 45);
@@ -252,6 +259,7 @@ table {
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+
 caption {
   caption-side: top;
   font-size: 2rem;
@@ -301,15 +309,25 @@ th {
   text-transform: uppercase;
   padding: 15px;
   letter-spacing: 1px;
+  font-size: 1.3rem;
 }
-
+td:empty::before {
+  content: "-";
+  color: rgb(0, 0, 0);
+  display: inline-block;
+  width: 100%;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-align: center;
+  opacity: 1;
+}
 td {
   padding: 14px;
   border: 3px solid rgba(255, 255, 255, 0.1);
   transition: background 0.3s ease;
   color:rgb(34, 42, 45);
   font-weight: bold;
-  font-size:1rem;
+  font-size:1.1rem;
 }
 
 tr:nth-child(odd) {
@@ -349,18 +367,18 @@ tr:hover {
     padding: 5px;
   }
   caption{
-    font-size:1.5rem;
+    font-size:1.3rem;
   }
   th{
-    font-size:0.8rem;
+    font-size:0.7rem;
   }
   td{
-    font-size:0.8rem;
+    font-size:0.7rem;
   }
-  th:nth-child(5), td:nth-child(5) {
+  /* th:nth-child(5), td:nth-child(5) {
       width:0;
       display:none;
-    }
+    } */
   .paraText{
     font-size:0.8rem;
   }

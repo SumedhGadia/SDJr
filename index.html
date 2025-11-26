@@ -5,46 +5,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Day 2025</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="sportsLogo.png" type="image/x-icon">
-</head>
+    <link rel="icon" href="sports medal back.png" type="image/x-icon">
+</head> 
+
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAJ35AIHvm0LBKdsvp7FPJy7UNpng3QD2E",
-    authDomain: "sportsday-8ee20.firebaseapp.com",
-    databaseURL: "https://sportsday-8ee20-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "sportsday-8ee20",
-    storageBucket: "sportsday-8ee20.appspot.com",
-    messagingSenderId: "658029013662",
-    appId: "1:658029013662:web:92bbbf25d87917fbc8298f",
-    measurementId: "G-NDPG93JPZX"
-  };
+/* -------------------- 1) Firebase Init --------------------- */
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyAJ35AIHvm0LBKdsvp7FPJy7UNpng3QD2E",
+  authDomain: "sportsday-8ee20.firebaseapp.com",
+  databaseURL: "https://sportsday-8ee20-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sportsday-8ee20",
+  storageBucket: "sportsday-8ee20.appspot.com",
+  messagingSenderId: "658029013662",
+  appId: "1:658029013662:web:92bbbf25d87917fbc8298f"
+};
 
-  const housesRef = ref(db, "houses");
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
 
-  // REFERENCES TO THE 4 BIG BOXES
-  const curtainScores = {
-    savio: document.querySelector("#curt1 .box h1"),
-    bosco: document.querySelector("#curt2 .box h1"),
-    rua: document.querySelector("#curt3 .box h1"),
-    francis: document.querySelector("#curt4 .box h1"),
-  };
+const eventsRef = ref(db, "events");
+const housesRef = ref(db, "houses");
 
-  onValue(housesRef, (snapshot) => {
-    if (!snapshot.exists()) return;
-    const data = snapshot.val();
+/* -------------------- 2) Auto Score Calculator (SAFE) --------------------- */
 
-    // SHOW RAW SCORES IN CURTAIN BOXES
-    curtainScores.savio.textContent = data.savio;
-    curtainScores.bosco.textContent = data.bosco;
-    curtainScores.rua.textContent = data.rua;
-    curtainScores.francis.textContent = data.francis;
-    });
+/* -------------------- FIXED AUTO SCORE CALCULATOR --------------------- */
+onValue(eventsRef, (snap) => {
+  if (!snap.exists()) return;
+
+  const events = snap.val();
+
+  const totals = { savio: 0, bosco: 0, rua: 0, francis: 0 };
+
+  Object.values(events).forEach(group => {
+
+    // skip empty groups or bad data
+    if (!group || typeof group !== "object") return;
+
+    Object.values(group)
+      .filter(item => item && typeof item === "object")   // FIX: ignore nulls
+      .forEach(entry => {
+
+        const house = (entry.house || "").trim().toLowerCase();
+        const pts   = Number(entry.points) || 0;
+
+        if (house in totals) {
+          totals[house] += pts;
+        }
+
+      });
+  });
+
+  // write FINAL score only once
+  update(housesRef, totals);
+});
+
+/* -------------------- 3) Live Curtain Box Scores --------------------- */
+
+const curtain = {
+  savio:   document.querySelector("#curt1 .box h1"),
+  bosco:   document.querySelector("#curt2 .box h1"),
+  rua:     document.querySelector("#curt3 .box h1"),
+  francis: document.querySelector("#curt4 .box h1")
+};
+
+onValue(housesRef, (snap) => {
+  if (!snap.exists()) return;
+  const d = snap.val();
+
+  curtain.savio.textContent   = d.savio ?? 0;
+  curtain.bosco.textContent   = d.bosco ?? 0;
+  curtain.rua.textContent     = d.rua ?? 0;
+  curtain.francis.textContent = d.francis ?? 0;
+});
+
+/* -------------------- 4) Table Loader (Top 3 Only + Correct Order) --------------------- */
+
+const orderKeys = [
+  "100m_DivE","100m_DivD","100m_DivC","100m_DivB","100m_DivA",
+  "200m_DivE","200m_DivD","200m_DivC","200m_DivB","200m_DivA",
+  "400m_DivE","400m_DivD","400m_DivC","400m_DivB","400m_DivA",
+  "800m_DivB","800m_DivA",
+  "TunnelBall_E","TunnelBall_D","TunnelBall_C",
+  "Hurdle_B","Hurdle_A",
+  "Obstacle_E","Obstacle_D","Obstacle_C",
+  "HighJump_D","HighJump_C","HighJump_B","HighJump_A",
+  "LongJump_E","LongJump_D","LongJump_C","LongJump_B","LongJump_A",
+  "Javelin_B","Javelin_A",
+  "TugOfWar_B","TugOfWar_A",
+  "Relay_C","Relay_B","Relay_A"
+];
+
+const tbody = document.getElementById("tableBody");
+
+onValue(eventsRef, (snap) => {
+  tbody.innerHTML = "";
+  if (!snap.exists()) return;
+
+  const events = snap.val();
+  const rows = [];
+
+  orderKeys.forEach(key => {
+    const group = events[key];
+    if (!group) return;
+
+    Object.values(group)
+      .filter(r => Number(r.position) <= 3) // ONLY TOP 3
+      .forEach(r => {
+        rows.push(`
+          <tr>
+            <td>${r.position}</td>
+            <td>${r.eventName}</td>
+            <td>${r.house}</td>
+            <td>${r.name}</td>
+            <td>${r.points}</td>
+          </tr>
+        `);
+      });
+  });
+
+  tbody.innerHTML = rows.join("");
+});
 </script>
 
 
@@ -80,7 +164,6 @@
             </div>
             <div class="triangle" id="savio" role="img" aria-hidden="true"></div>
             <h1 class="nameTxt" id="savioHead" >SAVIO</h1>
-            <!-- <h1 class="scoreTxt">1<sup>st</sup></h1> -->
         </div>
         <div class="cEl" id="curt2">
             <div class="curtain" id="bosco">
@@ -88,11 +171,10 @@
             </div>
             <div class="triangle" id="bosco"></div>
             <h1 class="nameTxt" id="boscoHead">BOSCO</h1>
-            <!-- <h1 class="scoreTxt">2<sup>nd</sup></h1> -->
         </div>
 
         <div class="logoMain">
-            <img src="sportsLogo.png" alt="School logo" class="logoDBPC">
+            <img src="sports medal back.png" alt="School logo" class="logoDBPC">
         </div>
 
         <div class="cEl" id="curt3">
@@ -101,7 +183,6 @@
             </div>
             <div class="triangle" id="rua"></div>
             <h1 class="nameTxt" id="ruaHead">RUA</h1>
-            <!-- <h1 class="scoreTxt">3<sup>rd</sup></h1> -->
         </div>
         <div class="cEl" id="curt4">
             <div class="curtain" id="francis">
@@ -109,13 +190,12 @@
             </div>
             <div class="triangle" id="francis"></div>
             <h1 class="nameTxt" id="francisHead">FRANCIS</h1>
-            <!-- <h1 class="scoreTxt">4<sup>th</sup></h1> -->
         </div>
     </div>
 
     
         <div class="logoDummy">
-            <img src="sportsLogo.png" alt="School logo" class="logoDBPC">
+            <img src="sports medal back.png" alt="School logo" class="logoDBPC">
         </div>
 
         <div class="para">
@@ -124,11 +204,8 @@
         </div>
 
     </div>
-
-
 <div class="secondPage">
 <table id="standingsTable">
-    
     <caption>SCOREBOARD</caption>
     <thead>
       <tr>
@@ -139,31 +216,8 @@
         <th>Points</th>
       </tr>
     </thead>
-    <tbody id="tableBody">
-      <tr>
-        <td>1</td>
-        <td>Race</td>
-        <td>Blue</td>
-        <td>Rohit Sharma</td>
-        <td>95</td>
-      </tr>
-      <tr>
-         <td>2</td>
-        <td>Race</td>
-        <td>Yellow</td>
-        <td>Virat Kohli</td>
-        <td>70</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Race</td>
-        <td>Green</td>
-        <td>Hardik Pandya</td>
-        <td>60</td>
-      </tr>
-    </tbody>
-  </table>
-
+    <tbody id="tableBody"></tbody>
+</table>
 </div>
 
 
