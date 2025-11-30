@@ -9,23 +9,30 @@
 </head> 
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-/* -------------------- 1) Firebase Init --------------------- */
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAJ35AIHvm0LBKdsvp7FPJy7UNpng3QD2E",
-  authDomain: "sportsday-8ee20.firebaseapp.com",
-  databaseURL: "https://sportsday-8ee20-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "sportsday-8ee20",
-  storageBucket: "sportsday-8ee20.appspot.com",
-  messagingSenderId: "658029013662",
-  appId: "1:658029013662:web:92bbbf25d87917fbc8298f"
-};
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-const app = initializeApp(firebaseConfig);
-const db  = getDatabase(app);
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB3E91VEHJtWqV3zItY3iL2hI_wfOoH9FA",
+    authDomain: "sportsdayjr.firebaseapp.com",
+    databaseURL: "https://sportsdayjr-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "sportsdayjr",
+    storageBucket: "sportsdayjr.firebasestorage.app",
+    messagingSenderId: "79871043442",
+    appId: "1:79871043442:web:6a5095d403ee4494169feb",
+    measurementId: "G-D9GF193J5C"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
 
 const eventsRef = ref(db, "events");
 const housesRef = ref(db, "houses");
@@ -33,35 +40,35 @@ const housesRef = ref(db, "houses");
 /* -------------------- 2) Auto Score Calculator (SAFE) --------------------- */
 
 /* -------------------- FIXED AUTO SCORE CALCULATOR --------------------- */
-onValue(eventsRef, (snap) => {
-  if (!snap.exists()) return;
+// onValue(eventsRef, (snap) => {
+//   if (!snap.exists()) return;
 
-  const events = snap.val();
+//   const events = snap.val();
 
-  const totals = { savio: 0, bosco: 0, rua: 0, francis: 0 };
+//   const totals = { savio: 0, bosco: 0, rua: 0, francis: 0 };
 
-  Object.values(events).forEach(group => {
+//   Object.values(events).forEach(group => {
 
-    // skip empty groups or bad data
-    if (!group || typeof group !== "object") return;
+//     // skip empty groups or bad data
+//     if (!group || typeof group !== "object") return;
 
-    Object.values(group)
-      .filter(item => item && typeof item === "object")   // FIX: ignore nulls
-      .forEach(entry => {
+//     Object.values(group)
+//       .filter(item => item && typeof item === "object")   // FIX: ignore nulls
+//       .forEach(entry => {
 
-        const house = (entry.house || "").trim().toLowerCase();
-        const pts   = Number(entry.points) || 0;
+//         const house = (entry.house || "").trim().toLowerCase();
+//         const pts   = Number(entry.points) || 0;
 
-        if (house in totals) {
-          totals[house] += pts;
-        }
+//         if (house in totals) {
+//           totals[house] += pts;
+//         }
 
-      });
-  });
+//       });
+//   });
 
-  // write FINAL score only once
-  update(housesRef, totals);
-});
+//   // write FINAL score only once
+//   update(housesRef, totals);
+// });
 
 /* -------------------- 3) Live Curtain Box Scores --------------------- */
 
@@ -84,51 +91,51 @@ onValue(housesRef, (snap) => {
 
 /* -------------------- 4) Table Loader (Top 3 Only + Correct Order) --------------------- */
 
-const orderKeys = [
-  "100m_DivE","100m_DivD","100m_DivC","100m_DivB","100m_DivA",
-  "200m_DivE","200m_DivD","200m_DivC","200m_DivB","200m_DivA",
-  "400m_DivE","400m_DivD","400m_DivC",
-  "800m_DivB","800m_DivA",
-  "TunnelBall_CD&E",
-  "Hurdle_B","Hurdle_A",
-  "Obstacle_E","Obstacle_D","Obstacle_C",
-  "HighJump_D","HighJump_C","HighJump_B","HighJump_A",
-  "LongJump_E","LongJump_D","LongJump_C","LongJump_B","LongJump_A",
-  "Javelin_B","Javelin_A",
-  "TugOfWar_A&B",
-  "Relay_C","Relay_CD&E","Relay_A&B"
-];
+// const orderKeys = [
+//   "100m_DivE","100m_DivD","100m_DivC","100m_DivB","100m_DivA",
+//   "200m_DivE","200m_DivD","200m_DivC","200m_DivB","200m_DivA",
+//   "400m_DivE","400m_DivD","400m_DivC",
+//   "800m_DivB","800m_DivA",
+//   "TunnelBall_CD&E",
+//   "Hurdle_B","Hurdle_A",
+//   "Obstacle_E","Obstacle_D","Obstacle_C",
+//   "HighJump_D","HighJump_C","HighJump_B","HighJump_A",
+//   "LongJump_E","LongJump_D","LongJump_C","LongJump_B","LongJump_A",
+//   "Javelin_B","Javelin_A",
+//   "TugOfWar_A&B",
+//   "Relay_C","Relay_CD&E","Relay_A&B"
+// ];
 
-const tbody = document.getElementById("tableBody");
+// const tbody = document.getElementById("tableBody");
 
-onValue(eventsRef, (snap) => {
-  tbody.innerHTML = "";
-  if (!snap.exists()) return;
+// onValue(eventsRef, (snap) => {
+//   tbody.innerHTML = "";
+//   if (!snap.exists()) return;
 
-  const events = snap.val();
-  const rows = [];
+//   const events = snap.val();
+//   const rows = [];
 
-  orderKeys.forEach(key => {
-    const group = events[key];
-    if (!group) return;
+//   orderKeys.forEach(key => {
+//     const group = events[key];
+//     if (!group) return;
 
-    Object.values(group)
-      .filter(r => Number(r.position) <= 3) // ONLY TOP 3
-      .forEach(r => {
-        rows.push(`
-          <tr>
-            <td>${r.position}</td>
-            <td>${r.eventName}</td>
-            <td>${r.house}</td>
-            <td>${r.name}</td>
-            <td>${r.points}</td>
-          </tr>
-        `);
-      });
-  });
+//     Object.values(group)
+//       .filter(r => Number(r.position) <= 3) // ONLY TOP 3
+//       .forEach(r => {
+//         rows.push(`
+//           <tr>
+//             <td>${r.position}</td>
+//             <td>${r.eventName}</td>
+//             <td>${r.house}</td>
+//             <td>${r.name}</td>
+//             <td>${r.points}</td>
+//           </tr>
+//         `);
+//       });
+//   });
 
-  tbody.innerHTML = rows.join("");
-});
+//   tbody.innerHTML = rows.join("");
+// });
 </script>
 
 
@@ -204,7 +211,7 @@ onValue(eventsRef, (snap) => {
         </div>
 
     </div>
-<div class="secondPage">
+<!-- <div class="secondPage">
 <table id="standingsTable">
     <caption>SCOREBOARD</caption>
     <thead>
@@ -222,4 +229,4 @@ onValue(eventsRef, (snap) => {
 
 
 </body>
-</html>
+</html> -->
