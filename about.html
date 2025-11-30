@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-</head>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
- * {
+/* ---------------------- GLOBAL ---------------------- */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -15,7 +17,7 @@
 
 html, body {
   width: 100%;
-  overflow-x: hidden;  /* prevents right cut-off */
+  overflow-x: hidden;
 }
 
 body {
@@ -25,8 +27,10 @@ body {
   background-position: center;
   background-attachment: fixed;
   min-height: 100vh;
+  font-family: "Inter", sans-serif;
 }
 
+/* ---------------------- NAVBAR ---------------------- */
 .navbar {
   width:100%;
   position: fixed;
@@ -53,7 +57,6 @@ body {
   text-shadow: 0 0 8px rgba(255,255,255,0.4);
 }
 
-
 .nav-links {
   display: flex;
   gap: 25px;
@@ -75,7 +78,7 @@ body {
   font-size: 2rem;
   color: white;
   cursor: pointer;
-  display: none; /* hidden on desktop */
+  display: none;
 }
 
 @media (max-width: 650px) {
@@ -106,35 +109,126 @@ body {
     font-size: 1.3rem;
   }
 }
-.dev-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 420px;
-  padding: 30px 25px;
-  align-items: center;
+
+/* ---------------------- HOUSES SECTION ---------------------- */
+.houses-section {
+    padding: 120px 40px 60px; /* push down below navbar */
+    text-align: center;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+}
+
+/* Grid */
+.houses-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    justify-content: center;
+}
+
+/* Card */
+.house-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+}
+
+.house-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Image */
+.house-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* Colors */
+.house-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.red { color: #d0342c; }
+.blue { color: #2c7df0; }
+.green { color: #2f9e44; }
+.yellow { color: #f2a51a; }
+
+.house-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .houses-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .houses-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------------------- DEVELOPER BOX ---------------------- */
+.section-title{
+   margin: 30px auto;
+  width: 40%;
+  padding: 25px 20px;
+  text-align: center;
+
   background: rgba(0, 0, 0, 0.7);
   border-radius: 12px;
   backdrop-filter: blur(4px);
   box-shadow: 0 8px 30px rgba(0,0,0,0.35);
 
-  text-align: center;
   color: white;
 }
 
-.dev-container h2 {
+.dev-container{
+  margin: 70px auto;
+  width: 420px;
+  padding: 30px 25px;
+  text-align: center;
+
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+
+  color: white;
+}
+
+.dev-container h2,.section-title{
   font-family: "Oswald", sans-serif;
   font-size: 60px;
   letter-spacing: 2px;
 }
 
 .dev-container p {
-  font-family: "Inter", sans-serif;
   font-size: 30px;
 }
+
 @media screen and (max-width: 600px) {
-  .dev-container h2 {
+  .dev-container,.section-title{
+    width: 85%;
+    padding: 20px 15px;
+  }
+
+  .dev-container h2,.section-title {
     font-size: 30px;
   }
 
@@ -142,19 +236,15 @@ body {
     font-size: 20px;
   }
 
-  .dev-container {
-    width: 85%;               
-    padding: 20px 15px;       
-    left: 50%;
-    top: 55%;                 
-    transform: translate(-50%, -50%);
-  }
-
-}
-
 </style>
+</head>
+
+
+<!-- 💡 BODY START -->
 <body>
-        <nav class="navbar">
+
+<!-- ---------------------- NAVBAR ---------------------- -->
+<nav class="navbar">
   <div class="nav-left">
     <div class="nav-logo">SPORTS DAY</div>
   </div>
@@ -164,16 +254,75 @@ body {
     <a href="about.html" class="nav-item">About Us</a>
   </div>
 
-  <div class="burger" id="burgerBtn">
-    ☰
-  </div>
+  <div class="burger" id="burgerBtn">☰</div>
 </nav>
+
+<script>
+  const burgerBtn = document.getElementById("burgerBtn");
+  const navLinks = document.getElementById("navLinks");
+
+  burgerBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+  });
+</script>
+
+<!-- ---------------------- HOUSES SECTION ---------------------- -->
+<section class="houses-section">
+    <h2 class="section-title">Our School Houses</h2>
+
+
+    <div class="houses-container">
+
+        <div class="house-card">
+            <img src="savio.png" class="house-img">
+            <h3 class="house-name red">Savio</h3>
+            <p class="house-desc">
+                Red House stands for passion, courage, and relentless determination. 
+                Inspired by Saint Dominic Savio, it nurtures leadership and resilience in every challenge.
+                 Members radiate a bold spirit, excelling in both academics and the sports arena.
+            </p>
+        </div>
+
+        <div class="house-card">
+            <img src="bosco.png" class="house-img">
+            <h3 class="house-name blue">Bosco</h3>
+            <p class="house-desc">
+                Blue House represents wisdom, integrity, and calm confidence. Guided by the vision of Saint John Bosco, 
+                it encourages students to balance knowledge with kindness. 
+                Members lead with clarity and serve with a compassionate heart and with humility.
+            </p>
+        </div>
+
+        <div class="house-card">
+            <img src="rua.jpg" class="house-img">
+            <h3 class="house-name green">Rua</h3>
+            <p class="house-desc">
+                Green House embodies growth, harmony, and steady perseverance. Blessed Michael Rua’s 
+                humility and dedication inspire members to chase excellence while fostering unity.
+                 It’s a house where ambition blooms and teamwork thrives.
+            </p>
+        </div>
+
+        <div class="house-card">
+            <img src="francis.png" class="house-img">
+            <h3 class="house-name yellow">Francis</h3>
+            <p class="house-desc">
+                Yellow House symbolizes optimism, energy, and creative brilliance. Following 
+                the ideals of Saint Francis de Sales, it encourages a cheerful spirit and fearless leadership.
+                 Members shine in academics, culture, and service with warmth and grace.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ---------------------- DEVELOPER SECTION ---------------------- -->
 <div class="dev-container">
     <h2>DEVELOPERS</h2>
     <p>Sumedh Gadia</p>
     <p>Vatsal Newar</p>
+    <a href="https://www.donboscoparkcircus.org/" style="color:#fff;"><p>Visit us :-</p></a>
 </div>
 
-    
 </body>
 </html>
